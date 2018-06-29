@@ -1,0 +1,9 @@
+server:
+  port: 8012
+spring:
+  application:
+    name: d3
+
+  thymeleaf:
+      cache: false
+      mode: LEGACYHTML5

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>选择元素和绑定数据</title>
+    <!--引入d3.js-->
+    <script src="js/d3/d3.js"></script>
+</head>
+<body>
+<div>
+    <p>在 D3 中，用于选择元素的函数有两个：</p>
+    <p>d3.select()：是选择所有指定元素的第一个;</p>
+    <p>d3.selectAll()：是选择指定元素的全部.</p>
+    <p> 这两个函数返回的结果称为选择集，常见用法如下：</p>
+    <p>var body = d3.select("body"); //选择文档中的body元素</p>
+    <p>var p1 = body.select("p"); //选择body中的第一个p元素</p>
+    <p>var p = body.selectAll("p"); //选择body中的所有p元素</p>
+    <p>var svg = body.select("svg"); //选择body中的svg元素</p>
+    <p>var rects = svg.selectAll("rect"); //选择svg中所有的svg元素</p>
+    <p>选择元素</p>
+    <p>select 和 selectAll 的参数，其实是符合 CSS 选择器的条件的，即用“井号（#）”表示 id，用“点（.）”表示 class。</p>
+    <ul><p>插入、删除元素</p>
+        <ol>append()：在选择集末尾插入元素</ol>
+        <ol>insert()：在选择集前面插入元素</ol>
+        <ol>删除元素使用 remove</ol>
+    </ul>
+    </br>
+    <p>D3 中是通过以下两个函数来绑定数据的：</p>
+    <p>datum()：绑定一个数据到选择集上;</p>
+    <p style="color: red">data()：绑定一个数组到选择集上，数组的各项值分别与选择集的各元素绑定.</p>
+    </br></br>
+    示例：</br>
+    <b id="apple">Apple</b></br>
+    <b class=".pear">Pear</b></br>
+    <b>Banana</b></br>
+    <a href="javascript:void(0);" onclick="blinding()">点击绑定:绑定一个数据到选择集上(datum)</a></br>
+    <a href="javascript:void(0);" onclick="blindingAll()">点击绑定:绑定一个数组到选择集上，数组的各项值分别与选择集的各元素绑定(data)</a>
+</div>
+</body>
+<script>
+    function blinding() {
+        var str = "china";
+        var body = d3.select("body");
+        var b = body.selectAll("b");
+        // 将此字符串分别与三个段落元素绑定
+        b.datum(str);
+        b.text(function (d, i) {
+            //d 代表数据，也就是与某元素绑定的数据;i 代表索引，代表数据的索引号，从 0 开始
+            return "第 " + i + " 个元素绑定的数据是 " + d;
+        });
+    }
+    function blindingAll() {
+        var dataset = ["I like dogs","I like cats","I like snakes"];
+        var body = d3.select("body");
+        var b = body.selectAll("b");
+        // 将此字符串分别与三个段落元素绑定
+        b.data(dataset);
+        b.text(function (d, i) {
+            //d 代表数据，也就是与某元素绑定的数据;
+            return d;
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-introduce</title>
+    <!--引入d3.js-->
+    <script src="js/d3/d3.js"></script>
+</head>
+<body>
+<div>
+    <p>hello world!</p>
+    <a href="/selectAndBinding">选择元素和绑定数据</a>
+</div>
+</body>
+<script>
+    // 使用 d3.select() 或 d3.selectAll() 选择元素后返回的对象，就是选择集。链式语法
+    var p = d3.select("body").selectAll("p").text("D3.js 是基于数据操作文档的 JavaScript 库，通过 HTML、SVG 和 CSS 赋予数据以生命。D3 集强力的可视化组件与数据驱动型的 DOM 操作手法于一身，能最大限度地引出现代浏览器的性能，而不必束缚于特定的框架。");
+    p.style("color", "red").style("font-size", "22px");
+
+</script>
+</html>
