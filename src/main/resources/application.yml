@@ -1,5 +1,13 @@
 server:
   port: 8012
+
+#logging:
+#  level:
+#    com:
+#      example: DEBUG
+#  file: F:/data/logs/springboot_shiro.log
+#  config: classpath:logback-spring.xml
+
 spring:
   application:
     name: d3
@@ -7,3 +15,44 @@ spring:
   thymeleaf:
       cache: false
       mode: LEGACYHTML5
+
+  ##数据库连接信息
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    # 6.x版本的MySQL JDBC驱动类为com.mysql.cj.jdbc.Driver
+    # 5.X版本的MySQL JDBC驱动类为com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///springboot_shiro?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true
+    username: root
+    password: root
+#    test-while-idle: true
+#    time-between-eviction-runs-millis: 300000
+#    min-evictable-idle-time-millis: 1800000
+#    test-on-borrow: false
+#    validation-query: SELECT 1 FROM DUAL
+#    validation-interval: 300000
+#    initial-size: 5
+#    min-idle: 5
+#    max-active: 200
+#    max-wait: 60000
+#
+#    max-lifetime: 28770000
+#    validation-timeout: 3000
+#    idle-timeout: 60000
+#    connection-timeout: 30000
+#    read-only: false
+#    connection-test-query: SELECT 1 FROM DUAL
+#    minimum-idle: 5
+#    maximum-pool-size: 10
+#    pool-name: shiro
+#    auto-commit: false
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+#  http:
+#    encoding:
+#      charset: utf-8
+#      enabled: true
