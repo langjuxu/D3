@@ -30,4 +30,11 @@ public interface UserService {
      * @return
      */
     int updateUser(String password, Date creatTime, int uid);
+
+    /**
+     * 通过username查找用户信息;
+     *
+     * @param username
+     */
+    User findByUsername(String username);
 }

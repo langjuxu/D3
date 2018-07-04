@@ -3,6 +3,8 @@ package com.example.controller;
 import com.example.entity.User;
 import com.example.service.UserService;
 import com.example.util.EncodeUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,8 @@ public class ShiroUserController {
     }
 
     // 更新用户
+//    @RequiresRoles("lang1")// 添加角色
+    @RequiresPermissions("user:update")// 添加权限
     @RequestMapping(value = "/updateUser")
     public void updateUser() {
         int updateUser = userService.updateUser(EncodeUtil.encodeSHA("111111" + "lang1"), new Date(), 1);

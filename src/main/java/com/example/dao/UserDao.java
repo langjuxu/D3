@@ -17,6 +17,8 @@ import java.util.Date;
 public interface UserDao extends CrudRepository<User, Long> {
     /**
      * 通过username查找用户信息;
+     *
+     * @param username
      */
     User findByUsername(String username);
 
