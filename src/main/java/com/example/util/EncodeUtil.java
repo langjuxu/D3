@@ -1,6 +1,7 @@
 package com.example.util;
 
 import org.apache.shiro.codec.Hex;
+import org.apache.shiro.crypto.hash.Sha1Hash;
 
 import javax.crypto.Cipher;
 import java.security.*;
@@ -31,7 +32,7 @@ public class EncodeUtil {
 
     public static String encodeSHA(String src) {
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA");
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
             md.update(src.getBytes());
             return Hex.encodeToString(md.digest());
         } catch (NoSuchAlgorithmException e) {
@@ -105,6 +106,11 @@ public class EncodeUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String shiroSHA1Encode(String pwd, String salt) {
+        Sha1Hash sha1Hash = new Sha1Hash(pwd, salt);
+        return sha1Hash.toString();
     }
 
 }

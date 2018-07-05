@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
+import java.util.Random;
 
 /**
  * 用户控制层
@@ -24,19 +25,24 @@ public class ShiroUserController {
     private UserService userService;
 
     // 添加用户
+    //    @RequiresRoles("admin")// 添加角色
+    @RequiresPermissions("user:creat")// 添加权限
     @RequestMapping(value = "/creatUser")
     public void creatUser() {
         User user = new User();
-        user.setUid(1);
-        user.setName("feng1");
-        user.setUsername("lang1");
-        user.setPassword(EncodeUtil.encodeSHA("111111" + user.getUsername()));
+        user.setUid(3);
+        user.setName("feng3");
+        user.setUsername("lang3");
+        String salt = EncodeUtil.encodeMD5(user.getUsername() + new Random().nextInt());
+        user.setPassword(EncodeUtil.shiroSHA1Encode("111111", salt));
+        user.setSalt(salt);
         user.setState(1);
+        user.setCreatTime(new Date());
         userService.save(user);
     }
 
     // 更新用户
-    @RequiresRoles("admin")// 添加角色
+    @RequiresRoles("admin1")// 添加角色
 //    @RequiresPermissions("user:update")// 添加权限
     @RequestMapping(value = "/updateUser")
     public void updateUser() {

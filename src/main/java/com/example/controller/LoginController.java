@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.util.EncodeUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -37,7 +36,7 @@ public class LoginController {
         System.err.println("------login start-----");
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, EncodeUtil.encodeSHA(password + username));
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
         usernamePasswordToken.setRememberMe(true);
         //进行验证，这里可以捕获异常，然后返回对应信息void
         String msg = "";

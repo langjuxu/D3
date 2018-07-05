@@ -1,5 +1,7 @@
 package com.example.config;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.crypto.hash.Sha1Hash;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -9,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * shiro配置项
@@ -31,7 +34,7 @@ public class ShiroConfig {
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
         //过滤链定义，从上向下顺序执行，一般将/**放在最为下边:这是一个坑呢，一不小心代码就不好使了;
-        //authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问
+        //authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问，顺序过滤，这个一般放在最后面
         filterChainDefinitionMap.put("/**", "authc");
         // 如果不设置默认会自动寻找Web工程根目录下的"login"页面
         shiroFilterFactoryBean.setLoginUrl("/login");
@@ -48,6 +51,7 @@ public class ShiroConfig {
     @Bean
     public MyShiroRealm myShiroRealm() {
         MyShiroRealm myShiroRealm = new MyShiroRealm();
+        myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return myShiroRealm;
     }
 
@@ -65,6 +69,21 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
+    }
+
+    // shrio加密
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName("SHA-1");
+        // 散列的次数
+        hashedCredentialsMatcher.setHashIterations(1);
+        return hashedCredentialsMatcher;
+    }
+
+    public static void main(String[] args) {
+        Sha1Hash sha1Hash = new Sha1Hash("111111", "lang1" + new Random().nextInt());
+        System.out.println(sha1Hash);
     }
 
 }

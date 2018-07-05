@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 05/07/2018 10:31:38
+ Date: 05/07/2018 15:21:20
 */
 
 SET NAMES utf8mb4;
@@ -28,9 +28,9 @@ CREATE TABLE `hibernate_sequence`  (
 -- ----------------------------
 -- Records of hibernate_sequence
 -- ----------------------------
-INSERT INTO `hibernate_sequence` VALUES (3);
-INSERT INTO `hibernate_sequence` VALUES (3);
-INSERT INTO `hibernate_sequence` VALUES (3);
+INSERT INTO `hibernate_sequence` VALUES (4);
+INSERT INTO `hibernate_sequence` VALUES (4);
+INSERT INTO `hibernate_sequence` VALUES (4);
 
 -- ----------------------------
 -- Table structure for permission
@@ -111,8 +111,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'feng1', 'a0deec547acb467662f10179f0c7ab3c814479cf', NULL, 1, 'lang1', '2018-07-05 10:30:13');
-INSERT INTO `user` VALUES (2, 'feng2', 'a0deec547acb467662f10179f0c7ab3c814479cf', NULL, 1, 'lang2', '2018-07-05 10:21:17');
+INSERT INTO `user` VALUES (3, 'feng3', '1110c677cafa6505a88292dbfa9ec3ae90494a77', 'd3a015aa0867e9cedab47a2a4af93a31', 1, 'lang3', '2018-07-05 14:27:10');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -131,7 +130,6 @@ CREATE TABLE `user_role`  (
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES (1, 1, '2018-07-04 17:27:36');
-INSERT INTO `user_role` VALUES (2, 1, '2018-07-05 10:21:27');
+INSERT INTO `user_role` VALUES (3, 1, '2018-07-05 14:32:26');
 
 SET FOREIGN_KEY_CHECKS = 1;
