@@ -4,7 +4,6 @@ import com.example.entity.Permission;
 import com.example.entity.Role;
 import com.example.entity.User;
 import com.example.service.UserService;
-import com.example.util.EncodeUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
