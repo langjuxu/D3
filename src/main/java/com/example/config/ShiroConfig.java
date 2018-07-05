@@ -36,7 +36,7 @@ public class ShiroConfig {
         // 如果不设置默认会自动寻找Web工程根目录下的"login"页面
         shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/index");
+        shiroFilterFactoryBean.setSuccessUrl("/index1");
         // 错误页面，认证不通过跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

@@ -1,8 +1,15 @@
 package com.example.controller;
 
+import com.example.util.EncodeUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class LoginController {
 
+    private Logger log = LoggerFactory.getLogger(LoginController.class);
+
     // 未登录时，get请求跳转到登陆页面
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -24,11 +33,37 @@ public class LoginController {
 
     // 登陆页面登陆
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(HttpServletRequest request) {
+    public String login(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password) {
         System.err.println("------login start-----");
-
-
-        System.err.println("-------login end------");
+        //添加用户认证信息
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, EncodeUtil.encodeSHA(password + username));
+        usernamePasswordToken.setRememberMe(true);
+        //进行验证，这里可以捕获异常，然后返回对应信息void
+        String msg = "";
+        try {
+            //7.传入上一步骤创建的token对象，登录，即进行身份验证操作。
+            subject.login(usernamePasswordToken);
+            System.err.println("-------login end------");
+            return "index1";
+        } catch (UnknownAccountException uae) {
+            msg = "用户名未知...";
+            log.info("用户不存在");
+        } catch (IncorrectCredentialsException ice) {
+            msg = "密码不正确 ...";
+            log.info("密码不正确");
+            request.setAttribute("msg", "密码不正确");
+        } catch (LockedAccountException lae) {
+            msg = "用户被禁用...";
+            log.info("用户被禁用");
+        } catch (ExcessiveAttemptsException eae) {
+            msg = "请求次数过多，用户被锁定";
+            log.info("请求次数过多，用户被锁定");
+        } catch (AuthenticationException ae) {
+            msg = "未知错误，无法完成登录";
+            log.info("未知错误，无法完成登录");
+        }
+        request.setAttribute("msg", msg);
         return "login";
     }
 

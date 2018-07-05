@@ -36,8 +36,8 @@ public class ShiroUserController {
     }
 
     // 更新用户
-//    @RequiresRoles("lang1")// 添加角色
-    @RequiresPermissions("user:update")// 添加权限
+    @RequiresRoles("admin")// 添加角色
+//    @RequiresPermissions("user:update")// 添加权限
     @RequestMapping(value = "/updateUser")
     public void updateUser() {
         int updateUser = userService.updateUser(EncodeUtil.encodeSHA("111111" + "lang1"), new Date(), 1);

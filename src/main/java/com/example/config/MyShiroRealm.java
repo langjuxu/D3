@@ -4,10 +4,8 @@ import com.example.entity.Permission;
 import com.example.entity.Role;
 import com.example.entity.User;
 import com.example.service.UserService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import com.example.util.EncodeUtil;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -41,9 +39,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         for (Role role : user.getRoleList()) {
             // 添加角色
+            System.err.println("-----添加角色------");
             authorizationInfo.addRole(role.getRole());
             for (Permission permission : role.getPermissions()) {
                 // 添加权限
+                System.err.println("-----添加权限------");
                 authorizationInfo.addStringPermission(permission.getPermission());
             }
         }
@@ -57,14 +57,19 @@ public class MyShiroRealm extends AuthorizingRealm {
         if (authenticationToken.getPrincipal() == null) {
             return null;
         }
+        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         // 获取用户信息
-        String username = authenticationToken.getPrincipal().toString();
+//        String username = authenticationToken.getPrincipal().toString();
+        String username = usernamePasswordToken.getUsername();
         User user = userService.findByUsername(username);
         if (user == null) {
             System.err.println("用户不存在！！！");
             return null;
         }
-        SimpleAuthenticationInfo authorizationInfo = new SimpleAuthenticationInfo(username, user.getPassword(), getName());
+        SimpleAuthenticationInfo authorizationInfo = new SimpleAuthenticationInfo(
+                username,// 用户名
+                user.getPassword(),// 密码
+                getName());// realm name
         return authorizationInfo;
     }
 }
